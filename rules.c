@@ -1,6 +1,69 @@
 #include "magiskpolicy.h"
 #include "sepolicy.h"
 
+void samsung() {
+	sepol_deny("policyloader_app", "security_spota_file", "dir", "read");
+	sepol_deny("policyloader_app", "security_spota_file", "dir", "write");
+	sepol_deny("policyloader_app", "security_spota_file", "file", "read");
+	sepol_deny("policyloader_app", "security_spota_file", "file", "write");
+	sepol_deny("system_server", "security_spota_file", "dir", "read");
+	sepol_deny("system_server", "security_spota_file", "dir", "write");
+	sepol_deny("system_server", "security_spota_file", "file", "read");
+	sepol_deny("system_server", "security_spota_file", "file", "write");
+	sepol_deny("system_app", "security_spota_file", "dir", "read");
+	sepol_deny("system_app", "security_spota_file", "dir", "write");
+	sepol_deny("system_app", "security_spota_file", "file", "read");
+	sepol_deny("system_app", "security_spota_file", "file", "write");
+	sepol_deny("installd", "security_spota_file", "dir", "read");
+	sepol_deny("installd", "security_spota_file", "dir", "write");
+	sepol_deny("installd", "security_spota_file", "file", "read");
+	sepol_deny("installd", "security_spota_file", "file", "write");
+	sepol_deny("init", "security_spota_file", "dir", "read");
+	sepol_deny("init", "security_spota_file", "dir", "write");
+	sepol_deny("init", "security_spota_file", "file", "read");
+	sepol_deny("init", "security_spota_file", "file", "write");
+	sepol_deny("ueventd", "security_spota_file", "dir", "read");
+	sepol_deny("ueventd", "security_spota_file", "dir", "write");
+	sepol_deny("ueventd", "security_spota_file", "file", "read");
+	sepol_deny("ueventd", "security_spota_file", "file", "write");
+	sepol_deny("runas", "security_spota_file", "dir", "read");
+	sepol_deny("runas", "security_spota_file", "dir", "write");
+	sepol_deny("runas", "security_spota_file", "file", "read");
+	sepol_deny("runas", "security_spota_file", "file", "write");
+	sepol_deny("drsd", "security_spota_file", "dir", "read");
+	sepol_deny("drsd", "security_spota_file", "dir", "write");
+	sepol_deny("drsd", "security_spota_file", "file", "read");
+	sepol_deny("drsd", "security_spota_file", "file", "write");
+	sepol_deny("debuggerd", "security_spota_file", "dir", "read");
+	sepol_deny("debuggerd", "security_spota_file", "dir", "write");
+	sepol_deny("debuggerd", "security_spota_file", "file", "read");
+	sepol_deny("debuggerd", "security_spota_file", "file", "write");
+	sepol_deny("vold", "security_spota_file", "dir", "read");
+	sepol_deny("vold", "security_spota_file", "dir", "write");
+	sepol_deny("vold", "security_spota_file", "file", "read");
+	sepol_deny("vold", "security_spota_file", "file", "write");
+	sepol_deny("zygote", "security_spota_file", "dir", "read");
+	sepol_deny("zygote", "security_spota_file", "dir", "write");
+	sepol_deny("zygote", "security_spota_file", "file", "read");
+	sepol_deny("zygote", "security_spota_file", "file", "write");
+	sepol_deny("auditd", "security_spota_file", "dir", "read");
+	sepol_deny("auditd", "security_spota_file", "dir", "write");
+	sepol_deny("auditd", "security_spota_file", "file", "read");
+	sepol_deny("auditd", "security_spota_file", "file", "write");
+	sepol_deny("servicemanager", "security_spota_file", "dir", "read");
+	sepol_deny("servicemanager", "security_spota_file", "dir", "write");
+	sepol_deny("servicemanager", "security_spota_file", "file", "read");
+	sepol_deny("servicemanager", "security_spota_file", "file", "write");
+	sepol_deny("itsonbs", "security_spota_file", "dir", "read");
+	sepol_deny("itsonbs", "security_spota_file", "dir", "write");
+	sepol_deny("itsonbs", "security_spota_file", "file", "read");
+	sepol_deny("itsonbs", "security_spota_file", "file", "write");
+	sepol_deny("commonplatformappdomain", "security_spota_file", "dir", "read");
+	sepol_deny("commonplatformappdomain", "security_spota_file", "dir", "write");
+	sepol_deny("commonplatformappdomain", "security_spota_file", "file", "read");
+	sepol_deny("commonplatformappdomain", "security_spota_file", "file", "write");
+}
+
 void allowSuClient(char *target) {
 	sepol_allow(target, "rootfs", "file", ALL);
 	sepol_allow(target, "rootfs", "lnk_file", ALL);
@@ -210,5 +273,9 @@ void sepol_magisk_rules() {
 		sepol_allowxperm("domain", "devpts", "chr_file", "0x5400-0x54FF");
 		sepol_allowxperm("domain", "untrusted_app_25_devpts", "chr_file", "0x5400-0x54FF");
 	}
+
+	// Samsung specific
+	if(sepol_exists("knox_system_app"))
+		samsung();
 }
 
